@@ -32,7 +32,7 @@ def process_file(file_path):
         if "Temp. HL(°C)" in df:
             ax1.plot(df["Timestamp"], df["Temp. HL(°C)"], color='darkred', linestyle='--', linewidth=1.3)
         if "Dew Point(°C)" in df:
-            ax1.plot(df["Timestamp"], df["Dew Point(°C)"], color='navy', linewidth=1.6)
+            z=1 #ax1.plot(df["Timestamp"], df["Dew Point(°C)"], color='navy', linewidth=1.6)
         ax2 = ax1.twinx()
         ax2.plot(df["Timestamp"], df["RH(%rh)"], color='green', linewidth=1.6)
         if "RH HL(%rh)" in df:
@@ -62,7 +62,8 @@ def process_file(file_path):
         legend_entries = [
             [("Temp.(°C)", 'red', '-'), ("Temp. LL(°C)", 'brown', '-.'), ("Temp. HL(°C)", 'darkred', '--')],
             [("RH(%rh)", 'green', '-'), ("RH HL(%rh)", 'lime', '--'),
-             ("Dew Point(°C)", 'navy', '-')]
+             #("Dew Point(°C)", 'navy', '-')
+             ]
         ]
         x0, y0, dx, dy = 0.53, 1.11, 0.14, 0.035
         for row_idx, row in enumerate(legend_entries):
