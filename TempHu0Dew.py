@@ -28,15 +28,15 @@ def process_file(file_path):
         fig.patch.set_facecolor('white')
         ax1.plot(df["Timestamp"], df["Temp.(°C)"], color='red', linewidth=1.6)
         if "Temp. LL(°C)" in df:
-            ax1.plot(df["Timestamp"], df["Temp. LL(°C)"], color='brown', linestyle='dashed', linewidth=1.3)
+            ax1.plot(df["Timestamp"], df["Temp. LL(°C)"], color='Red', linestyle='dashed', linewidth=1.32)
         if "Temp. HL(°C)" in df:
-            ax1.plot(df["Timestamp"], df["Temp. HL(°C)"], color='darkred', linestyle='--', linewidth=1.3)
+            ax1.plot(df["Timestamp"], df["Temp. HL(°C)"], color='red', linestyle='dashed', linewidth=1.35)
         if "Dew Point(°C)" in df:
             z=1 #ax1.plot(df["Timestamp"], df["Dew Point(°C)"], color='navy', linewidth=1.6)
         ax2 = ax1.twinx()
         ax2.plot(df["Timestamp"], df["RH(%rh)"], color='green', linewidth=1.6)
         if "RH HL(%rh)" in df:
-            ax2.plot(df["Timestamp"], df["RH HL(%rh)"], color='lime', linestyle='--', linewidth=1.3)
+            ax2.plot(df["Timestamp"], df["RH HL(%rh)"], color='lime', linestyle='dashed', linewidth=1.35)
 
         ax1.set_ylabel("Temperature (°C)")
         ax2.set_ylabel("Relative Humidity (%rh)")
@@ -48,19 +48,19 @@ def process_file(file_path):
         # ==== Đảm bảo tick đầu/cuối đúng hai mép ====
         ax1.set_xlim(df["Timestamp"].iloc[0], df["Timestamp"].iloc[-1])
         ax1.set_xticks(xtick_times)
-        ax1.set_xticklabels([dt.strftime('%H:%M:%S\n%d/%m/%Y') for dt in xtick_times], fontsize=9)
+        ax1.set_xticklabels([dt.strftime('%H:%M:%S\n%d/%m/%Y') for dt in xtick_times], fontsize=10.5)
 
         # Style tiêu đề, legend, grid, chú thích như bản cũ
         ax1.text(0.5, 1.17, "Temp. and Humi. Logger", transform=ax1.transAxes,
                  fontsize=15, fontweight='bold', ha='center')
-        ax1.annotate('', xy=(0.33, 1.15), xytext=(0.67, 1.15),
+        ax1.annotate('', xy=(0.33, 1.15), xytext=(0.67, 1.15,),
                      xycoords='axes fraction',
                      arrowprops=dict(arrowstyle='-', color='black', linewidth=1))
         ax1.text(0.01, 1.11, f"{serial_number} - {logger_name}",
                  transform=ax1.transAxes, fontsize=9, ha='left')
 
         legend_entries = [
-            [("Temp.(°C)", 'red', '-'), ("Temp. LL(°C)", 'brown', '-.'), ("Temp. HL(°C)", 'darkred', '--')],
+            [("Temp.(°C)", 'red', '-'), ("Temp. LL(°C)", 'red', '--'), ("Temp. HL(°C)", 'red', '--')],
             [("RH(%rh)", 'green', '-'), ("RH HL(%rh)", 'lime', '--'),
              #("Dew Point(°C)", 'navy', '-')
              ]
@@ -78,10 +78,10 @@ def process_file(file_path):
 
         start_time = df["Timestamp"].min().strftime('%d-%b-%y %H:%M:%S')
         end_time = df["Timestamp"].max().strftime('%d-%b-%y %H:%M:%S')
-        plt.figtext(0.5, 0.01, f'From: {start_time}  To: {end_time}', ha='center', fontsize=10)
+        plt.figtext(0.5, 0.01, f'From: {start_time}  To: {end_time}', ha='center', fontsize=10.5)
         plt.subplots_adjust(left=0.07, right=0.93, top=0.83, bottom=0.18)
 
-        output_path = file_path.replace(".xlsx", "_TH.pdf")
+        output_path = file_path.replace(".xlsx", "_T.pdf")
         with PdfPages(output_path) as pdf:
             pdf.savefig(fig, dpi=300)
         return os.path.basename(output_path)
